@@ -14,7 +14,7 @@ public class ModifyRestrictionsTest extends BaseTest {
     public void myFirstTest() throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.navigateToLogin();
-        HomePage homePage = loginPage.login("nadya.v.yusupova@gmail.com", "63977Attl");
+        HomePage homePage = loginPage.login(System.getenv("TEST_EMAIL"), "63977Attl");
         // driver.get("https://nvyu.atlassian.net/wiki/spaces/TESTSPACE/pages/65575/bla2");
         PublishedPage page = homePage.navigateToPublishedPage("https://nvyu.atlassian.net/wiki/spaces/TESTSPACE/pages/65575/bla2");
 
