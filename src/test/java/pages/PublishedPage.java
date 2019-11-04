@@ -7,9 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class PublishedPage {
-
-    private final WebDriver driver;
+public class PublishedPage extends BasePage {
 
     private static String URL_MATCH = "/pages";
 
@@ -31,18 +29,6 @@ public class PublishedPage {
 
         PageFactory.initElements(driver, this);
         this.driver = driver;
-    }
-
-    public void waitToBeClickableAndClick(WebElement element) throws Error{
-
-        WebDriverWait wait= new WebDriverWait(driver,10);
-        WebElement el=wait.until(ExpectedConditions.elementToBeClickable(element));
-        el.click();
-    }
-
-    public void waitForVisibility(WebElement element) throws Error{
-        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(element));
-
     }
 
     public boolean isRestrictionButtonDisplayed() {

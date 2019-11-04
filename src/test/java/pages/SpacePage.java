@@ -5,9 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class SpacePage {
-
-    private final WebDriver driver;
+public class SpacePage extends BasePage {
 
     @FindBy(linkText = "createGlobalItem")
     private WebElement createButton;

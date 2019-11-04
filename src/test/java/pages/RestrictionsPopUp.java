@@ -7,9 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-public class RestrictionsPopUp {
-
-    private final WebDriver driver;
+public class RestrictionsPopUp extends BasePage {
 
     private static String URL_MATCH = "/pages";
 
@@ -50,19 +48,6 @@ public class RestrictionsPopUp {
 
         PageFactory.initElements(driver, this);
         this.driver = driver;
-    }
-
-    public void waitForVisibility(WebElement element) throws Error{
-        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(element));
-
-    }
-
-    public void waitToBeClickableAndClick(WebElement element) throws Error{
-
-        WebDriverWait wait= new WebDriverWait(driver,10);
-        WebElement el=wait.until(ExpectedConditions.elementToBeClickable(element));
-        el.click();
-
     }
 
     public boolean isEditRestrictionsDropDownDisplayed() {
@@ -156,13 +141,5 @@ public class RestrictionsPopUp {
         String className= driver.findElement(By.xpath("//tr[contains(@class,'TableRow')]//div[contains(text(),'"+name+"')]/ancestor::tr[contains(@class,'TableRow')]")).getAttribute("class");
 
         return driver.findElement(By.xpath("//tr[contains(@class,'"+className+"')]//div[contains(@class,'singleValue')]/span")).getText();
-
-
-
-
     }
-
-
-
-
 }

@@ -7,9 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class LoginPage {
-
-    private final WebDriver driver;
+public class LoginPage extends BasePage {
 
     @FindBy(id = "username")
     private WebElement usernameInput;
@@ -24,19 +22,6 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    public void waitForVisibility(WebElement element) throws Error{
-        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(element));
-
-    }
-
-    public void waitToBeClickableAndClick(WebElement element) throws Error{
-
-        WebDriverWait wait= new WebDriverWait(driver,10);
-        WebElement el=wait.until(ExpectedConditions.elementToBeClickable(element));
-        el.click();
-
-    }
-
     public HomePage login(String username, String password) {
         waitToBeClickableAndClick(usernameInput);
         usernameInput.sendKeys(username);
@@ -45,13 +30,14 @@ public class LoginPage {
         waitToBeClickableAndClick(passwordInput);
         passwordInput.sendKeys(password);
         waitToBeClickableAndClick(loginSubmit);
-        new WebDriverWait(driver,10).until(ExpectedConditions.urlContains("atlassian.net/wiki"));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.urlContains("atlassian.net/wiki"));
 
         return new HomePage(driver);
     }
 
     public void navigateToLogin() {
         driver.get("https://nvyu.atlassian.net/wiki/");
+        //todo: waitUntilUrlContains?
         PageFactory.initElements(driver, this);
     }
 }
