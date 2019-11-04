@@ -9,9 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class HomePage {
-
-    private final WebDriver driver;
+public class HomePage extends BasePage {
 
     @FindBy(id = "profileGlobalItem")
     private WebElement profile;
@@ -26,30 +24,16 @@ public class HomePage {
         this.driver = driver;
     }
 
-    public void waitToBeClickableAndClick(WebElement element) throws Error{
-
-        WebDriverWait wait= new WebDriverWait(driver,10);
-        WebElement el=wait.until(ExpectedConditions.elementToBeClickable(element));
-        el.click();
-
-    }
-
-    public void waitForVisibility(WebElement element) throws Error{
-        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(element));
-
-    }
-
-    public void logOut(){
+    public void logOut() {
         waitToBeClickableAndClick(profile);
         waitToBeClickableAndClick(logOutButton);
-        new WebDriverWait(driver,10).until(ExpectedConditions.urlContains("id.atlassian.com/login"));
-
+        waitUntilUrlContains("id.atlassian.com/login");
     }
 
     public PublishedPage navigateToPublishedPage(String url) {
         driver.get(url);
         waitForVisibility(driver.findElement(By.id("title-text")));
-        new WebDriverWait(driver,15).until(webDriver -> ((JavascriptExecutor)webDriver).executeScript("return document.readyState").equals("complete"));
+        waitForJavascriptComplete();
         return new PublishedPage(driver);
     }
 
