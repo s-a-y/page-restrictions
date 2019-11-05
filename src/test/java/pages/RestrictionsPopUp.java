@@ -36,10 +36,6 @@ public class RestrictionsPopUp extends BasePage {
     @FindBy(xpath = "//*[contains(text(),'Cancel')]")
     private WebElement cancelButton;
 
-    @FindBy(xpath = "//div[@data-test-id='restrictions-dialog-modal']")
-    private WebElement restrictionsDialog;
-
-
 
     public RestrictionsPopUp(WebDriver driver) {
         if (!driver.getCurrentUrl().contains(URL_MATCH)) {
@@ -68,13 +64,13 @@ public class RestrictionsPopUp extends BasePage {
 
     public PublishedPage clickApplyButton(){
         waitToBeClickableAndClick(applyButton);
-       // new WebDriverWait(driver,10).until(ExpectedConditions.invisibilityOf(restrictionsDialog));
+        waitForInvisibilityBy(By.xpath("//div[@data-test-id='restrictions-dialog-modal']"));
         return new PublishedPage(driver);
     }
 
     public PublishedPage clickCancelButton(){
         waitToBeClickableAndClick(cancelButton);
-    //    new WebDriverWait(driver,10).until(ExpectedConditions.invisibilityOf(restrictionsDialog));
+        waitForInvisibilityBy(By.xpath("//div[@data-test-id='restrictions-dialog-modal']"));
         return new PublishedPage(driver);
     }
 
@@ -91,10 +87,6 @@ public class RestrictionsPopUp extends BasePage {
         }
         else {
             editRestrictionsDropDown.click();
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ie) {
-            }
 
             waitToBeClickableAndClick(driver.findElement(By.xpath("//*[contains(text(),'" + permission + "')]")));
             return clickApplyButton();
@@ -110,17 +102,14 @@ public class RestrictionsPopUp extends BasePage {
         waitToBeClickableAndClick(editRestrictionsDropDown);
         waitToBeClickableAndClick(driver.findElement(By.xpath("//*[contains(text(),'" + permission + "')]")));
         waitToBeClickableAndClick(restrictionsAddUserField);
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException ie) {
-        }
 
         restrictionsAddUserInputField.sendKeys(name);
-
         try {
             Thread.sleep(2000);
-        } catch (InterruptedException ie) {
+        } catch (InterruptedException e) {
         }
+//        waitToBeClickableAndClick(driver.findElement(By.xpath("//*[@data-test-id=user-group-search-label]")));
+
 
         restrictionsAddUserInputField.sendKeys(Keys.ENTER);
 

@@ -15,12 +15,11 @@ public class PublishedPage extends BasePage {
     @FindBy(xpath = "//button[@data-test-id='restrictions.dialog.button']")
     private WebElement restrictionsButton;
 
-    @FindBy(id ="title-text")
+    @FindBy(id = "title-text")
     private WebElement titleText;
 
     @FindBy(xpath = "//h2/span[contains(text(),'This is a restricted page')]")
     private WebElement restrictedTitle;
-
 
 
     public PublishedPage(WebDriver driver) {
@@ -39,22 +38,31 @@ public class PublishedPage extends BasePage {
         return restrictionsButton.isDisplayed();
     }
 
-    public String title(){
+    public String title() {
 
-        new WebDriverWait(driver,10).until(ExpectedConditions.visibilityOf(titleText));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(titleText));
         return titleText.getText();
 
     }
 
-    public boolean isRestrictedTitleShown(){
+    public boolean isRestrictedTitleShown() {
         return restrictedTitle.isDisplayed();
     }
 
     public RestrictionsPopUp clickRestrictionButton() {
-        waitForVisibility(restrictionsButton);
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfAllElementsLocatedBy((By.xpath("//button[@data-test-id='restrictions.dialog.button']"))));
         waitToBeClickableAndClick(restrictionsButton);
         return new RestrictionsPopUp(driver);
+    }
+
+
+    public void logOut() {
+
+        waitToBePresent("//button[@id='profileGlobalItem']");
+        waitToBeClickableAndClick(driver.findElement(By.xpath("//button[@id='profileGlobalItem']")));
+
+        waitToBePresent("//a[@href='/wiki/logout.action']");
+        waitToBeClickableAndClick(driver.findElement(By.xpath("//a[@href='/wiki/logout.action']")));
+        waitUntilUrlContains("id.atlassian.com/login");
     }
 
 }

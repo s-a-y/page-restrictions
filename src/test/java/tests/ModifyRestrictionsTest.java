@@ -20,7 +20,6 @@ public class ModifyRestrictionsTest extends BaseTest {
 
         //initial check
 
-        Thread.sleep(2000);
         assertTrue(page.isRestrictionButtonDisplayed());
         RestrictionsPopUp popup = page.clickRestrictionButton();
         assertTrue(popup.isEditRestrictionsDropDownDisplayed());
@@ -28,10 +27,9 @@ public class ModifyRestrictionsTest extends BaseTest {
 
         // remove all restrictions/
 
-        popup.setPermissions("Anyone can view and edit");
+        page = popup.setPermissions("Anyone can view and edit");
 
         //check that restrictions are set to "Anyone can view and edit"
-        Thread.sleep(3000);
         assertTrue(page.isRestrictionButtonDisplayed());
         popup = page.clickRestrictionButton();
         assertEquals("Anyone can view and edit", popup.checkSelectedPermissions());
@@ -40,30 +38,25 @@ public class ModifyRestrictionsTest extends BaseTest {
         page = popup.setUserRestrictions("n5", "Viewing and editing restricted", "Can view and edit");
 
         //check new permissions as admin user
-        Thread.sleep(3000);
         assertTrue(page.isRestrictionButtonDisplayed());
         popup = page.clickRestrictionButton();
         popup.isUserAdded("n5");
         assertEquals("Can view and edit", popup.checkAddedUsePermissions("n5"));
-        popup.clickCancelButton();
+        page = popup.clickCancelButton();
 
         //login with added user and check that he can access the page
 
-        Thread.sleep(2000);
-        homePage.logOut();
+        page.logOut();
 
-        Thread.sleep(2000);
-        loginPage.login(System.getProperty("test.email2"), System.getProperty("test.password2"));
-        homePage.navigateToPublishedPage(System.getProperty("test.page_url"));
+        homePage = loginPage.login(System.getProperty("test.email2"), System.getProperty("test.password2"));
+        page = homePage.navigateToPublishedPage(System.getProperty("test.page_url"));
         assertEquals("bla2", page.title());
 
         //login with user who was not added - not able to access the page
 
-        Thread.sleep(2000);
-        homePage.logOut();
-        Thread.sleep(2000);
-        loginPage.login(System.getProperty("test.email3"), System.getProperty("test.password3"));
-        homePage.navigateToPublishedPage(System.getProperty("test.page_url"));
+        page.logOut();
+        homePage = loginPage.login(System.getProperty("test.email3"), System.getProperty("test.password3"));
+        page = homePage.navigateToPublishedPage(System.getProperty("test.page_url"));
         assertTrue(page.isRestrictedTitleShown());
     }
 }

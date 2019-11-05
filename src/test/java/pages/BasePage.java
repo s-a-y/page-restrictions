@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -12,14 +9,23 @@ public abstract class BasePage {
     protected WebDriver driver;
 
     public void waitToBeClickableAndClick(WebElement element) throws Error {
-
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        WebElement el = wait.until(ExpectedConditions.elementToBeClickable(element));
-        el.click();
+        try {
+            WebElement el = new WebDriverWait(driver, 10).until(ExpectedConditions.elementToBeClickable(element));
+            el.click();
+        } catch (ElementClickInterceptedException exception) {
+            // infinite recursion, get rid of it
+            waitToBeClickableAndClick(element);
+        }
     }
 
     public void waitForVisibility(WebElement element) throws Error {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitForInvisibilityBy(By locator) throws Error {
+        try {
+            new WebDriverWait(driver, 3).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+        } catch (NoSuchElementException | TimeoutException exception) {}
     }
 
     public void waitToBePresent(String xpath) throws Error {
