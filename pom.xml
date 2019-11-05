@@ -7,6 +7,35 @@
     <groupId>org.atlassian</groupId>
     <artifactId>confluence-cloud-page-restrictions</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <webdriver.chrome.driver>/Users/dev/Downloads/chromedriver2</webdriver.chrome.driver>
+                        <test.email1>nadya.v.yusupova@gmail.com</test.email1>
+                        <test.password1>63977Attl</test.password1>
+                        <test.email2>n5@mailforspam.com</test.email2>
+                        <test.password2>123P@ssword</test.password2>
+                        <test.email3>n4@mailforspam.com</test.email3>
+                        <test.password3>123P@ssword</test.password3>
+                        <test.page_url>https://nvyu.atlassian.net/wiki/spaces/TESTSPACE/pages/65575/bla2</test.page_url>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
