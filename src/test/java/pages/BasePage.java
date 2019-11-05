@@ -23,7 +23,7 @@ public abstract class BasePage {
     }
 
     public void waitToBePresent(String xpath) throws Error {
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
     }
 
     public void waitForJavascriptComplete() {
