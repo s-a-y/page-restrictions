@@ -1,20 +1,18 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage {
 
     @FindBy(id = "profileGlobalItem")
     private WebElement profile;
 
-    @FindBy(xpath = "//a[@href='/wiki/logout.action']")
+  //  @FindBy(xpath = "//a[@href='/wiki/logout.action']")
+    @FindBy(xpath = "//*[@id='profileGlobalItem']/div/span/div/span/span")
     private WebElement logOutButton;
 
 
@@ -25,8 +23,11 @@ public class HomePage extends BasePage {
     }
 
     public void logOut() {
+        waitToBePresent("//*[@id='profileGlobalItem']");
         waitToBeClickableAndClick(profile);
+        waitToBePresent("//a[@href='/wiki/logout.action']");
         waitToBeClickableAndClick(logOutButton);
+
         waitUntilUrlContains("id.atlassian.com/login");
     }
 
