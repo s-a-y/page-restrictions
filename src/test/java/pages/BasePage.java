@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,11 +16,14 @@ public abstract class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement el = wait.until(ExpectedConditions.elementToBeClickable(element));
         el.click();
-
     }
 
     public void waitForVisibility(WebElement element) throws Error {
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitToBePresent(String xpath) throws Error {
+        new WebDriverWait(driver, 10).until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
     }
 
     public void waitForJavascriptComplete() {
